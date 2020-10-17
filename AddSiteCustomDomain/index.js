@@ -23,15 +23,23 @@ module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function setting domain for ', domainName);
 
     let responseMessage = '';
+    let statusCode = 200;
     if (domainName) {
-        const siteClient = await getWebSiteClient();
-        const hostBinding = {};
-        const updateResponse = await siteClient.webApps.createOrUpdateHostNameBinding(SITE_RESOURCE_GROUP, WEBAPP_NAME, domainName, hostBinding);    
-        responseMessage = JSON.stringify(updateResponse);
+        try {
+            const siteClient = await getWebSiteClient();
+            const hostBinding = {};
+            const updateResponse = await siteClient.webApps.createOrUpdateHostNameBinding(SITE_RESOURCE_GROUP, WEBAPP_NAME, domainName, hostBinding);    
+            responseMessage = JSON.stringify(updateResponse);    
+        }
+        catch(err) {
+            statusCode = 500;
+            context.log.err('failed to add domain', err);
+            responseMessage = JSON.stringify(err);
+        }
     }
 
     context.res = {
-        // status: 200, /* Defaults to 200 */
+        status: statusCode, /* Defaults to 200 */
         body: responseMessage
     };
 }
