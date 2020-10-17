@@ -19,14 +19,16 @@ async function getWebSiteClient() {
 }
 
 module.exports = async function (context, req) {
-    const domainName = (req.query.name || (req.body && req.body.name));
+    const domainName = (req.body && req.body.name);
     context.log('JavaScript HTTP trigger function setting domain for ', domainName);
 
-    const siteClient = await getWebSiteClient();
-    const hostBinding = {};
-    const updateResponse = await siteClient.webApps.createOrUpdateHostNameBinding(SITE_RESOURCE_GROUP, WEBAPP_NAME, domainName, hostBinding);
-
-    const responseMessage = JSON.stringify(updateResponse);
+    let responseMessage = '';
+    if (domainName) {
+        const siteClient = await getWebSiteClient();
+        const hostBinding = {};
+        const updateResponse = await siteClient.webApps.createOrUpdateHostNameBinding(SITE_RESOURCE_GROUP, WEBAPP_NAME, domainName, hostBinding);    
+        responseMessage = JSON.stringify(updateResponse);
+    }
 
     context.res = {
         // status: 200, /* Defaults to 200 */
