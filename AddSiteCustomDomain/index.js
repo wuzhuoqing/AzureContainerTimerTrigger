@@ -31,7 +31,7 @@ module.exports = async function (context, req) {
     }
 
     context.res = {
-        status: statusCode, /* Defaults to 200 */
+        // status: statusCode, /* Defaults to 200 */
         body: responseMessage
     };
 }
