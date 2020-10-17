@@ -13,7 +13,7 @@ async function getWebSiteClient() {
     if (AZURE_CLIENT_SECRET) {
         creds = await msRestNodeAuth.loginWithServicePrincipalSecret(AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, AZURE_TENANT_ID);
     } else {
-        creds = await msRestNodeAuth.loginWithVmMSI();
+        creds = await msRestNodeAuth.loginWithAppServiceMSI();
     }
     return new WebSiteManagementClient(creds, AZURE_SUBSCRIPTION_ID);
 }
