@@ -15,7 +15,7 @@ function triggerWebJob (logFunc) {
             path: '/api/triggeredwebjobs/' + LETSENCRYPT_WEBJOB_JOBNAME + '/run',
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': auth,
                 'Content-Length': 0
             }
         };
