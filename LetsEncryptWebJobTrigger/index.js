@@ -25,7 +25,11 @@ function triggerWebJob (logFunc) {
             logFunc('headers:', res.headers);
         
             res.on('data', (d) => {
-                logFunc(d);
+                if (d && d.toString) {
+                    logFunc(d.toString());
+                } else {
+                    logFunc(d);
+                }
             });
             res.on('end', function () {
                 logFunc('end');
