@@ -1,4 +1,3 @@
-const querystring = require('querystring');
 const https = require('https');
 
 const LETSENCRYPT_WEBJOB_USER = process.env['LETSENCRYPT_WEBJOB_USER'];
@@ -9,10 +8,11 @@ const LETSENCRYPT_WEBJOB_JOBNAME = process.env['LETSENCRYPT_WEBJOB_JOBNAME'];
 function triggerWebJob (logFunc) {    
     return new Promise((resolve, reject) => {
         auth = "Basic " + Buffer.from(LETSENCRYPT_WEBJOB_USER + ":" + LETSENCRYPT_WEBJOB_PASS).toString("base64");
+        let webJobParam = 'letsencrypt:renewXNumberOfDaysBeforeExpiration 30';
         var options = {
             hostname: LETSENCRYPT_WEBJOB_APPNAME + '.scm.azurewebsites.net',
             port: 443,
-            path: '/api/triggeredwebjobs/' + LETSENCRYPT_WEBJOB_JOBNAME + '/run',
+            path: '/api/triggeredwebjobs/' + LETSENCRYPT_WEBJOB_JOBNAME + '/run?arguments=' + encodeURIComponent(webJobParam),
             method: 'POST',
             headers: {
                 'Authorization': auth,
