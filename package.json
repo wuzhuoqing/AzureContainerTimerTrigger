@@ -9,7 +9,7 @@
   "dependencies": {
     "@azure/arm-appservice": "^5.8.0",
     "@azure/arm-containerinstance": "^5.4.0",
-    "@azure/ms-rest-nodeauth": "^3.0.3"
+    "@azure/ms-rest-nodeauth": "^3.0.8"
   },
   "devDependencies": {}
 }
